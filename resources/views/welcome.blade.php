@@ -76,6 +76,16 @@
       } else {
         document.body.classList.remove('hidden-content');
       }
+      
+      if (window.innerWidth = 800 && window.innerHeight = 600) {
+        document.body.classList.remove('hidden-content');
+        
+        
+      } else {
+        document.body.classList.add('hidden-content');
+      }
+
+
 
       if (window.innerWidth < 1920 && window.innerHeight < 1080) {
         document.body.classList.add('hidden-content');
