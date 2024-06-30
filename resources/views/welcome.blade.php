@@ -72,7 +72,7 @@
     function checkScreenSize() {
       const width = window.innerWidth;
       const height = window.innerHeight;
-      if ((width === 800 && height >= 600 )
+      if ((width === 800 && height >= 590 )
      ) {
       
         document.body.classList.remove('hidden-content');
