@@ -88,7 +88,7 @@
 
       const codigo = document.getElementById('codigo').value;
       const loadingElement = document.getElementById('loading');
-      loadingElement.style.display = 'block'; // Mostrar o modal de carregamento
+     
 
       try {
         const response = await fetch('/salvar', {
@@ -100,8 +100,7 @@
           body: JSON.stringify({ codigo: codigo }),
         });
 
-        loadingElement.style.display = 'none'; // Esconder o modal de carregamento após receber a resposta
-
+     
         if (response.ok) {
           const result = await response.json();
           if (result.id) {
