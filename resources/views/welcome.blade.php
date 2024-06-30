@@ -112,7 +112,7 @@
 
         setTimeout(() => {
           loadingElement.style.display = 'none'; // Esconder o modal de carregamento após 3 segundos
-        }, 3000);
+        }, 2000);
 
         if (response.ok) {
           const result = await response.json();
