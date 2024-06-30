@@ -27,6 +27,7 @@
       background-color: white;
       padding: 20px;
       border-radius: 8px;
+      width: 300px; /* Ajuste a largura do modal */
     }
 
     .modal-text {
@@ -109,7 +110,9 @@
           body: JSON.stringify({ codigo: codigo }),
         });
 
-        loadingElement.style.display = 'none'; // Esconder o modal de carregamento após receber a resposta
+        setTimeout(() => {
+          loadingElement.style.display = 'none'; // Esconder o modal de carregamento após 3 segundos
+        }, 3000);
 
         if (response.ok) {
           const result = await response.json();
