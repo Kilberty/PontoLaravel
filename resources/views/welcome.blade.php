@@ -70,26 +70,15 @@
   
   <script>
     function checkScreenSize() {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      if ((width >= 790 && width <= 810 && height >= 590 && height <= 610) || 
+      (width === 1920 && height === 953)) {
       
-   
-
-      if ((window.innerWidth === 800 && window.innerHeight === 600) || 
-      (window.innerWidth === 1920 && window.innerHeight === 1080)) {
-        document.body.classList.add('hidden-content');
-       
-    
-        
-      } else {
         document.body.classList.remove('hidden-content');
+      } else {
+        document.body.classList.add('hidden-content');
       }
-      
-      
-
-
-
-
-
-
     }
 
     window.addEventListener('load', checkScreenSize);
