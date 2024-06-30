@@ -104,7 +104,7 @@
         if (response.ok) {
           const result = await response.json();
           if (result.id) {
-            alert(`Funcionário: ${result.Nome}, Código: ${result.Codigo}`);
+            alert(`${result.Nome} - ${result.Data} - ${result.Hora} ` );
           } else {
             alert(`Mensagem: ${result.message}`);
           }

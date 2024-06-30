@@ -37,6 +37,8 @@ class PontoController extends Controller
                     "id" => $funcionario->id,
                     "Codigo" => $funcionario->Codigo,
                     "Nome" => $funcionario->Nome,
+                    "Data" => $now->toDateString(),
+                    "Hora" => $now->toTimeString(),
                     "message" => "Ponto salvo com sucesso!"
                 ]);
             } else {
