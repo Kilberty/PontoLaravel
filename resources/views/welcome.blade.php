@@ -98,8 +98,7 @@
 
       const codigo = document.getElementById('codigo').value;
       const loadingElement = document.getElementById('loading');
-      loadingElement.style.display = 'block'; // Mostrar o modal de carregamento
-
+   
       try {
         const response = await fetch('/salvar', {
           method: 'POST',
@@ -110,10 +109,7 @@
           body: JSON.stringify({ codigo: codigo }),
         });
 
-        setTimeout(() => {
-          loadingElement.style.display = 'none'; // Esconder o modal de carregamento após 3 segundos
-        },500);
-
+ 
         if (response.ok) {
           const result = await response.json();
           if (result.id) {
