@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Salvar Ponto</title>
+  <title>Ponto</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -73,14 +73,23 @@
       const width = window.innerWidth;
       const height = window.innerHeight;
       if ((width === 800 && height === 475 ) || (width === 1920 && height === 953) ) {
-      
         document.body.classList.remove('hidden-content');
       } else {
         document.body.classList.add('hidden-content');
       }
     }
 
-    window.addEventListener('load', checkScreenSize);
+    function setFocusAndClear() {
+      const codigoInput = document.getElementById('codigo');
+      codigoInput.value = '';
+      codigoInput.focus();
+    }
+
+    window.addEventListener('load', () => {
+      checkScreenSize();
+      setFocusAndClear();
+    });
+
     window.addEventListener('resize', checkScreenSize);
 
     document.getElementById('saveForm').addEventListener('submit', async function(event) {
@@ -88,7 +97,7 @@
 
       const codigo = document.getElementById('codigo').value;
       const loadingElement = document.getElementById('loading');
-     
+      loadingElement.style.display = 'block'; // Mostrar o modal de carregamento
 
       try {
         const response = await fetch('/salvar', {
@@ -100,11 +109,12 @@
           body: JSON.stringify({ codigo: codigo }),
         });
 
-     
+        loadingElement.style.display = 'none'; // Esconder o modal de carregamento após receber a resposta
+
         if (response.ok) {
           const result = await response.json();
           if (result.id) {
-            alert(`${result.Nome} - ${result.Data} - ${result.Hora} ` );
+            alert(`${result.Nome} - ${result.Data} - ${result.Hora} `);
           } else {
             alert(`Mensagem: ${result.message}`);
           }
@@ -116,6 +126,8 @@
         loadingElement.style.display = 'none'; // Esconder o modal de carregamento em caso de erro
         console.error('Erro:', error);
         alert(error);
+      } finally {
+        setFocusAndClear();
       }
     });
   </script>
