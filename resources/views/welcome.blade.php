@@ -8,6 +8,8 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <style>
     /* Estilos adicionais para o modal de carregamento */
@@ -41,12 +43,16 @@
   </style>
 </head>
 <body class="h-screen min-w-screen hidden-content">
-  <div class="h-screen min-w-screen flex items-center justify-center bg-gray-100">
-    <div class="rounded-lg flex flex-col items-center justify-center bg-red-500 h-4/5 w-2/5">
+
+
+
+
+<div class="h-screen min-w-screen flex items-center justify-center bg-gray-100">
+    <div class="rounded-lg flex flex-col items-center justify-center bg-blue-800 h-4/5 w-3/5">
       <form class="flex flex-col" id="saveForm">
         <input
           pattern="[0-9]*"
-          class="mb-4 px-7 py-1 text-center border border-gray-300"
+          class="mb-2 px-8 py-2 text-center border border-gray-300"
           type="text"
           placeholder="Código"
           name="codigo"
@@ -54,7 +60,7 @@
           required
         />
         <div class="mt-10 flex items-center justify-center">
-          <button class="btn btn-primary px-5" type="submit">
+          <button class="btn btn-dark px-5" type="submit">
             Salvar
           </button>
         </div>
@@ -98,7 +104,8 @@
 
       const codigo = document.getElementById('codigo').value;
       const loadingElement = document.getElementById('loading');
-   
+      loadingElement.style.display = 'block'; // Mostrar o modal de carregamento
+
       try {
         const response = await fetch('/salvar', {
           method: 'POST',
@@ -109,22 +116,42 @@
           body: JSON.stringify({ codigo: codigo }),
         });
 
- 
+        loadingElement.style.display = 'none'; // Esconder o modal de carregamento
+
         if (response.ok) {
           const result = await response.json();
           if (result.id) {
-            alert(`${result.Nome} - ${result.Data} - ${result.Hora} `);
+            Swal.fire({
+              icon: 'success',
+              title: 'Ponto Registrado',
+              timer:3000,
+              text: `${result.Nome} - ${result.Data} - ${result.Hora} `
+            });
           } else {
-            alert(`Mensagem: ${result.message}`);
+            Swal.fire({
+              icon: 'info',
+              title: 'Mensagem',
+              text: result.message
+              
+            });
           }
         } else {
           const result = await response.json();
-          alert(`Erro: ${result.message}`);
+          Swal.fire({
+            icon: 'warning',
+            timer:3000,
+            text: 'Você já assinou todos os pontos de hoje.'
+          });
         }
       } catch (error) {
         loadingElement.style.display = 'none'; // Esconder o modal de carregamento em caso de erro
         console.error('Erro:', error);
-        alert(error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Erro',
+          timer:3000,
+          text: error.message
+        });
       } finally {
         setFocusAndClear();
       }

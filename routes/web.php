@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PontoController;
+use App\Http\Controllers\Ponto2Controller;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -18,6 +18,6 @@ Route::middleware('auth')->group(function () {
   
 });
 
-Route::post('/salvar', [PontoController::class, 'salvar']);
+Route::post('/salvar', [Ponto2Controller::class, 'salvarPonto']);
 
 require __DIR__.'/auth.php';
